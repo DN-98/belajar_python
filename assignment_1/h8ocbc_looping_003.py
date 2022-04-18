@@ -7,9 +7,11 @@ numbers = [
 ]
 
 for x in numbers:
-    if(x%2 == 0):
-        print(x)
-    # ? break setelah angka 918 sehingga 918 di print dulu baru di break
-    if(x == 918):
-        break
+  if(x%2 == 0):
+    print(x)
+  else:
+    continue
+  # ? break setelah angka 918 sehingga 918 di print dulu baru di break
+  if(x == 918):
+    break 
 print("Done")
