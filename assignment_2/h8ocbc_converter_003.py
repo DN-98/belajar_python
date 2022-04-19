@@ -1,77 +1,59 @@
 
 # ? membuat objek/class Temperature Contverter
 class TempContverter :
-    def celciusToKelvin(self, celcius):
+    def celcius_kelvin(self, temp_type, val):
         '''
             Celcius to Kelvin Converter
                 Parameters:
-                    celcius(float) : A celcius value 
+                    temp_type(str)  : string value temperature input type
+                    val(float)      : A celcius or kelvin value 
                 Returns:
-                    kelvin(float) : result of celcius to kelvin converter
+                    result(float) : result of celcius-kelvin or kelvin-celcius converter
         '''
-        print(f"Converting {celcius} celcius to Kelvin . . . \n")
-        kelvin = celcius + 273.15
-        return kelvin
-
-    def celciusToFahrenheit(self, celcius):
+        match (temp_type):
+            case "c":
+                print(f"Converting {val} celcius to Kelvin . . . \n")
+                result = val + 273.15
+            case "k":
+                print(f"Converting {val} kelvin to Celcius . . . \n")
+                result = val - 273.15
+        return result
+    
+    def toFahrenherit(self, temp_type, val):
         '''
-            Celcius to Fahrenheit Converter
+            Temperature to Fahrenheit Converter
                 Parameters:
-                    celcius(float) : A celcius value 
+                    temp_type(str)  : string value temperature input type
+                    val(float)      : A celcius or kelvin value 
                 Returns:
-                    fahrenheit(float) : result of celcius to fahrenheit converter
+                    result(float) : result of celcius-fahrenheit or kelvin-fahrenheit converter
         '''
-        print(f"Converting {celcius} celcius to Fahrenheit . . . \n")
-        fahrenheit = celcius * 9/5 + 32
-        return fahrenheit
-
-    def kelvinToCelcius(self, kelvin):
+        match (temp_type):
+            case "c":
+                print(f"Converting {val} celcius to Fahrenheit . . . \n")
+                result = val * 9/5 + 32
+            case "k":
+                print(f"Converting {val} kelvin to Fahrenheit . . . \n")
+                result = val  * 9/5 - 459.67
+        return result
+    
+    def fromFahrenherit(self, temp_type, val):
         '''
-            Kelvin to Celcius Converter
+            Fahrenheit to Temperature Converter
                 Parameters:
-                    kelvin(float) : A kelvin value 
+                    temp_type(str)  : string value temperature target type
+                    val(float)      : A fahrenheit value
                 Returns:
-                    celcius(float) : result of kelvin to celcius converter
+                    result(float) : result of fahrenheit-temperature converter
         '''
-        print(f"Converting {kelvin} kelvin to Celcius . . . \n")
-        celcius = kelvin - 273.15
-        return celcius
-
-    def kelvinToFahrenheit(self, kelvin):
-        '''
-            Kelvin to Fahrenheit Converter
-                Parameters:
-                    kelvin(float) : A kelvin value 
-                Returns:
-                    fahrenheit(float) : result of kelvin to fahrenheit converter
-        '''
-        print(f"Converting {kelvin} kelvin to Fahrenheit . . . \n")
-        fahrenheit = kelvin  * 9/5 - 459.67
-        return fahrenheit
-
-    def fahrenheitToCelcius(self, fahrenheit):
-        '''
-            Fahrenheit to Celcius Converter
-                Parameters:
-                    fahrenheit(float) : A fahrenheit value 
-                Returns:
-                    celcius(float) : result of fahrenheit to celcius converter
-        '''
-        print(f"Converting {fahrenheit} fahrenheit to Celcius . . . \n")
-        celcius = (fahrenheit - 32) * 5/9
-        return celcius
-
-    def fahrenheitToKelvin(self, fahrenheit):
-        '''
-            Fahrenheit to Kelvin Converter
-                Parameters:
-                    fahrenheit(float) : A fahrenheit value 
-                Returns:
-                    kelvin(float) : result of fahrenheit to kelvin converter
-        '''
-        print(f"Converting {fahrenheit} fahrenheit to Kelvin . . . \n")
-        kelvin = (fahrenheit + 459.67) * 5/9
-        return kelvin
+        match (temp_type):
+            case "c":
+                print(f"Converting {val} Fahrenheit to celcius. . . \n")
+                result = (val - 32) * 5/9
+            case "k":
+                print(f"Converting {val} Fahrenheit to kelvin . . . \n")
+                result = (val + 459.67) * 5/9
+        return result
     
 # ? menerapkan object TempConverter ke dalam variable tempConv
 tempConv = TempContverter()
@@ -94,22 +76,22 @@ def menu(m, n, val):
         case 1:
             # ? melakukan matching sesuai dengan jenis converter (n) untuk input suhu celcius
             match n:
-                case 1 : return tempConv.celciusToFahrenheit(val)
-                case 2 : return tempConv.celciusToKelvin(val)
+                case 1 : return tempConv.toFahrenherit("c",val)
+                case 2 : return tempConv.celcius_kelvin("c",val)
                 case default:
                     return  "Invalid Reqest"
         case 2:
             # ? melakukan matching sesuai dengan jenis converter (n) untuk input suhu fahrenheit
             match n:
-                case 1 : return  tempConv.fahrenheitToCelcius(val)
-                case 2 : return  tempConv.fahrenheitToKelvin(val)
+                case 1 : return  tempConv.fromFahrenherit("c", val)
+                case 2 : return  tempConv.fromFahrenherit("k", val)
                 case default:
                     return  "Invalid Reqest"
         case 3:
             # ? melakukan matching sesuai dengan jenis converter (n) untuk input suhu kelvin
             match n:
-                case 1 : return  tempConv.kelvinToCelcius(val)
-                case 2 : return  tempConv.kelvinToFahrenheit(val)
+                case 1 : return  tempConv.celcius_kelvin("k", val)
+                case 2 : return  tempConv.toFahrenherit("k", val)
                 case default:
                     return  "Invalid Reqest"
         case default:
@@ -132,14 +114,15 @@ while True:
         print(f"{i+1}. {ket[i][0]}")
 
     # ? input untuk jenis input suhu
-    m = int(input("\nMasukan pilihan: "))
+    m = int(input("\nMasukan angka pilihan[1-4]: "))
     # ? melakukan pengecekan kesesuaian input pertama (jenis input suhu)
     while((m <= 0 or m > 4)):
-        print("Invalid Input")
+        print("\nInvalid Input\n")
         print("Berikut tipe suhu yang dapat dipilih:")
         for i in range(0, len(ket)):
             print(f"{i+1}. {ket[i][0]}")
-            m = int(input("\nMasukan pilihan: "))
+        m = int(input("\nMasukan angka pilihan[1-4]: "))
+
     # ? melakukan pengecekan pilihan exit
     if(m == 4):
         break
@@ -149,18 +132,18 @@ while True:
         print("Berikut converter yang dapat dipilih:")
         for i in range(0, len(ket[m-1])):
             print(f"{i+1}. {ket[m-1][1][i]}")
-        print("3. exit")
+        print("3. back to main")
         # ? input untuk jenis konverter
-        n = int(input("\nMasukan pilihan: "))
+        n = int(input("\nMasukan angka pilihan[1-3]: "))
 
         # ? melakukan pengecekan kesesuaian input kedua (jenis konverter)
         while((n <= 0 or n > 3)):
-            print("Invalid Input")
+            print("\nInvalid Input\n")
             print("Berikut converter yang dapat dipilih:")
             for i in range(0, len(ket[m-1])):
                 print(f"{i+1}. {ket[m-1][1][i]}")
-            print("3. exit")
-            n = int(input("\nMasukan pilihan: "))
+            print("3. back to main")
+            n = int(input("\nMasukan angka pilihan [1-3]: "))
         if(n == 3):
             break
         
