@@ -16,7 +16,10 @@ def read_all():
     :return:                json list of all notes for all people
     """
     # Query the database for all the notes
-    notes = Note.query.order_by(db.desc(Note.timestamp)).all()
+    notes = Note.query.order_by(db.desc(Note.timestamp)).limit(1).all()
+
+    for i in notes:
+        print(i.__dict__)
 
     # Serialize the list of notes from our data
     note_schema = NoteSchema(many=True)
@@ -41,6 +44,8 @@ def read_one(person_id, note_id):
         .filter(Note.note_id == note_id)
         .one_or_none()
     )
+
+    # print(note.__dict__)
 
     # Was a note found?
     if note is not None:

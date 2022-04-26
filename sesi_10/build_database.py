@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 from config import db
+import models
 from models import Person, Note
 
 # Data to initialize database with
@@ -39,8 +40,8 @@ PEOPLE = [
 ]
 
 # Delete database file if it exists currently
-if os.path.exists('people.db'):
-    os.remove('people.db')
+# if os.path.exists('people.db'):
+#     os.remove('people.db')
 
 # Create the database
 db.create_all()
