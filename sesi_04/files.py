@@ -3,8 +3,6 @@
 
 # print(file)
 
-from logging import exception
-
 
 try:
     f = open("Hack8_Sample_Text.txt", encoding = 'utf-8')
